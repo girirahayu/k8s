@@ -60,7 +60,11 @@ RUN sed -i -e "s/;\?pid\s*=\s*.*/pid = \/run\/php-fpm7.pid/g" /etc/php7/php-fpm.
     sed -i -e "s/;\?pm\s*=\s*.*/pm = static/g" /etc/php7/php-fpm.d/www.conf && \
     sed -i -e "s/;\?expose_php\s*=\s*.*/expose_php = Off/g" /etc/php7/php.ini && \
     sed -i -e "s/;\?pm.max_children\s*=\s*.*/pm.max_children = 16/g" /etc/php7/php-fpm.d/www.conf && \
-    ln -nsf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+    ln -nsf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime && \
+    rm -fr /var/cache/apk/*
 
+RUN mkdir -p /opt/app
+RUN chown -R nobody:nobody /opt/app
+WORKDIR /opt/app
 ENTRYPOINT /usr/sbin/php-fpm7 -c /etc/php7/php-fpm.conf --nodaemonize
 EXPOSE 9000
