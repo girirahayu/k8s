@@ -11,7 +11,7 @@ ARG BRANCH
 
 RUN apk update && apk add --no-cache git
 
-WORKDIR $GOPATH/
+WORKDIR $GOPATH/src/
 
 #tweak for disable cache
 ARG CACHEBUST=1
@@ -20,7 +20,7 @@ RUN git clone $REPO app
 RUN cekdir=`ls $DIR | wc -l` && \
     if [ $cekdir -gt 0 ]; then cd app && git checkout $BRANCH ; fi
 
-WORKDIR $GOPATH/app
+WORKDIR $GOPATH/src/app
 # Using go get.
 RUN go get -d -v
 
