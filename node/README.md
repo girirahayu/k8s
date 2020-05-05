@@ -14,8 +14,7 @@ docker build --build-arg CACHEBUST=$(date +%s) \
 > if repo git using user/pass just change url to https://username:pass@github.com/resource/app.git
 
 ### Running Docker
-docker run -d --name node -h node --restart=always \ 
--p 80:8080 node:v1 server.js
+docker run -d --name node -h node --restart=always -p 80:8080 node:v1 server.js
 
 > server.js is init script for running the apps
 
