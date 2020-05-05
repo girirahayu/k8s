@@ -21,6 +21,8 @@ RUN cekdir=`ls $DIR | wc -l` && \
     if [ $cekdir -gt 0 ]; then cd app && git checkout $BRANCH ; fi
 
 WORKDIR /opt/app/
+RUN npm set progress=false && npm config set depth 0
+#RUN npm install --only=production 
 RUN npm install
 
 #CLEAN
