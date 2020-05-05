@@ -1,8 +1,6 @@
-#golang 1.14.2-alphine3.11
-
-
+#golang 1.14.2-alpine3.11
+FROM golang@sha256:9b3ad7928626126b72b916609ad081cfb6c0149f6e60cef7fc1e9e15a0d1e973 AS builder
 MAINTAINER n3wbiemember "<info@girirahayu.com>"
-FROM sha256:9b3ad7928626126b72b916609ad081cfb6c0149f6e60cef7fc1e9e15a0d1e973 AS builder
 
 ARG REPO
 ARG BRANCH
@@ -21,10 +19,12 @@ WORKDIR $GOPATH/src/package/app
 # Using go get.
 RUN go get -d -v
 
-RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/main
+#if wanna running go under other distribution
+#RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/main
 
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/main
 FROM scratch
-COPY --from=builder /go/bin/main /go/bin/main
-
-# Run the hello binary.
-ENTRYPOINT ["/go/bin/main"]
+COPY --from=builder /go/bin/main /
+# Run the binary.
+ENTRYPOINT ["/main"]
+EXPOSE 8080
