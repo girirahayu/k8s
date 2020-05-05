@@ -24,10 +24,10 @@ WORKDIR $GOPATH/src/package/app
 # Using go get.
 RUN go get -d -v
 
-#if wanna running go under other distro
-#RUN GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/main
+#For small binnary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/main
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/main
+#RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /go/bin/main
 FROM scratch
 COPY --from=builder /go/bin/main /
 # Run the binary.
