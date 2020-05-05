@@ -1,12 +1,12 @@
 # Build Example
 
- - docker build --build-arg
+ - docker --build-arg CACHEBUST=$(date +%s) build --build-arg
    REPO=https://github.com/girirahayu/gin-hello.git --build-arg
    BRANCH=master -t app:v1 .
 
     or
 
- - docker build --build-arg
+ - docker --build-arg CACHEBUST=$(date +%s) build --build-arg
    REPO=https://username:password@github.com/source/app.git
    --build-arg BRANCH=master -t app:v1 .
 
